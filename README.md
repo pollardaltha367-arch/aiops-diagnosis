@@ -57,6 +57,24 @@ python3 scripts/evaluate.py
 
 这些数字只描述当前人工样例集，不代表企业生产准确率。挑战集暴露了5类未覆盖同义表达，后续将通过独立公开数据和故障注入继续验证。
 
+## 真实公开日志任务
+
+项目已在Loghub官方BGL 2K样本上完成一次领域外评测。该样本包含2,000行Blue Gene/L超算日志，其中143行带官方告警标签。
+
+- [完整任务报告](real_tasks/bgl_2k/report.md)
+- [项目生成的诊断报告](real_tasks/bgl_2k/diagnosis.md)
+- 当前项目活动类别检测：Precision 0.182、Recall 0.042、F1 0.068
+- 结论：结构化CSV处理和报告流程可运行，但通用九类规则不能泛化为超算领域异常检测器
+
+复现方式：
+
+```powershell
+python3 scripts/fetch_bgl_sample.py
+python3 scripts/evaluate_bgl_task.py
+```
+
+外部数据不会提交到本仓库；下载脚本会校验SHA-256。
+
 ## 安全边界
 
 当前版本只生成诊断建议，不连接生产系统，不自动执行排查或修复命令。规则匹配只用于形成待验证假设，不能替代运维人员确认。基础脱敏用于降低本地分析时的信息暴露风险，不代表满足任何合规标准。
@@ -83,9 +101,11 @@ assets/web/                 本地 Web 界面
 scripts/diagnosis_engine.py 诊断、脱敏与报告引擎
 scripts/server.py           本地 HTTP 服务
 scripts/evaluate.py         标注评测脚本
+scripts/evaluate_bgl_task.py 真实公开日志任务评测
 rules/                      可扩展故障规则
 datasets/                   标注样例与挑战集
 evaluation/                 可复现指标与失败案例
+real_tasks/                 真实任务报告与诊断结果
 tests/                      自动化测试
 references/                 故障知识、报告模板与检查清单
 SKILL.md                    Codex Skill 工作流
