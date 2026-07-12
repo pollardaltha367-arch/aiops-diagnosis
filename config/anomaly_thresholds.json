@@ -1,0 +1,24 @@
+{
+  "severe_levels": ["FATAL", "CRITICAL", "SEVERE", "ERROR"],
+  "level_scores": {
+    "FATAL": 5,
+    "CRITICAL": 5,
+    "SEVERE": 4,
+    "ERROR": 4,
+    "WARN": 2,
+    "WARNING": 2,
+    "INFO": 0,
+    "DEBUG": 0,
+    "UNKNOWN": 0
+  },
+  "known_rule_bonus": 3,
+  "frequency_medium_count": 3,
+  "frequency_high_count": 10,
+  "frequency_medium_bonus": 1,
+  "frequency_high_bonus": 2,
+  "cross_object_count": 3,
+  "cross_object_bonus": 1,
+  "review_min_score": 4,
+  "priority_high_score": 8,
+  "priority_medium_score": 6
+}
