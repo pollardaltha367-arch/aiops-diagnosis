@@ -1,0 +1,11 @@
+[
+  {
+    "id": "PERMISSION_DENIED",
+    "category": "权限异常",
+    "patterns": ["permission denied", "unauthorized", "forbidden", "权限不足", "access denied"],
+    "negative_patterns": ["permission restored", "authorization succeeded", "access restored"],
+    "severity_weight": 3,
+    "verification": ["核对故障账号和最小权限", "检查凭据有效期和最近权限变更"],
+    "repair": "如果确认权限或凭据错误，则按最小权限原则恢复正确授权，不扩大长期权限。"
+  }
+]
