@@ -13,7 +13,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Compile
-        run: python -m py_compile scripts/diagnosis_engine.py scripts/server.py scripts/evaluate.py scripts/fetch_bgl_sample.py scripts/evaluate_bgl_task.py
+        run: python -m py_compile scripts/diagnosis_engine.py scripts/server.py scripts/evaluate.py scripts/fetch_bgl_sample.py scripts/evaluate_bgl_task.py scripts/triage_file.py
       - name: Unit tests
         run: python -m unittest discover -s tests -v
       - name: Benchmark
