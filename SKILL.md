@@ -169,6 +169,13 @@ python3 scripts/server.py
 
 然后访问 `http://127.0.0.1:8765`。该 PoC 支持文本、CSV、JSON/JSONL 输入，基础敏感信息脱敏，否定/恢复状态判断，重复事件聚合，根因类别假设排序，Markdown 报告导出和本地审计记录。
 
+本地PoC必须区分两类判断：
+
+- `anomaly_status`：当前事件是否具有异常证据。
+- `classification_status`：异常能否由现有规则分类。
+
+未命中已知规则但级别为FATAL、CRITICAL、SEVERE或ERROR的事件，进入“未知严重事件”复核通道。将活动异常按稳定模板ID聚合，根据日志级别、规则命中、重复次数和跨对象集中度形成高/中/低优先级队列。队列只用于人工复核分流，不代表根因已经确认。
+
 运行测试：
 
 ```powershell
