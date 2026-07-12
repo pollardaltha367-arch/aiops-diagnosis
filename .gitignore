@@ -10,3 +10,4 @@ datasets/external/*
 !datasets/external/.gitkeep
 .DS_Store
 Thumbs.db
+triage-output/
