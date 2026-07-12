@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AIOps 证据链诊断台</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div><span class="eyebrow">LOCAL · READ ONLY · POC</span><h1>AIOps 证据链诊断台</h1></div>
+      <div id="health" class="status">正在连接本地引擎…</div>
+    </header>
+    <section class="hero">
+      <div><h2>先保留证据，再讨论根因。</h2><p>输入日志后，本地引擎会脱敏、聚合异常、生成待验证根因和低风险排查动作。系统不会连接或修改生产环境。</p></div>
+      <div class="guardrail"><strong>安全边界</strong><span>不执行命令</span><span>不自动修复</span><span>不上传数据</span></div>
+    </section>
+    <section class="workspace">
+      <div class="panel input-panel">
+        <div class="panel-title"><h3>01 输入资料</h3><button id="sample" class="ghost">载入样例</button></div>
+        <label>来源名称<input id="source" value="incident.log" maxlength="120"></label>
+        <label>日志或故障描述<textarea id="text" placeholder="粘贴 ERROR/WARN 日志、告警内容或故障描述…"></textarea></label>
+        <div class="actions"><input id="file" type="file" accept=".log,.txt,.csv"><button id="run" class="primary">生成诊断报告</button></div>
+        <p id="error" class="error"></p>
+      </div>
+      <div class="panel output-panel">
+        <div class="panel-title"><h3>02 诊断结果</h3><button id="download" class="ghost" disabled>导出 Markdown</button></div>
+        <div id="empty" class="empty">等待输入<br><small>结果会在这里形成可追溯证据链</small></div>
+        <div id="result" hidden>
+          <div class="metrics"><div><span>风险</span><b id="risk">—</b></div><div><span>异常事件</span><b id="events">0</b></div><div><span>脱敏项</span><b id="redactions">0</b></div></div>
+          <h4>根因假设</h4><div id="hypotheses"></div>
+          <h4>关键证据</h4><div id="evidence" class="evidence"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
