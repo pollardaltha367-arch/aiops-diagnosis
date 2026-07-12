@@ -1,0 +1,11 @@
+[
+  {
+    "id": "SERVICE_UNAVAILABLE",
+    "category": "服务不可用",
+    "patterns": ["service unavailable", "health check failed", "process exited", "服务不可用", "connection reset"],
+    "negative_patterns": ["service recovered", "health check passed", "service back to normal"],
+    "severity_weight": 4,
+    "verification": ["检查进程、端口、健康检查和退出码", "检查依赖服务和最近发布"],
+    "repair": "如果确认进程退出或发布异常，则先保存现场，再按回滚或恢复流程处理。"
+  }
+]
