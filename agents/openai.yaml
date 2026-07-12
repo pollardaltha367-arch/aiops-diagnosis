@@ -1,0 +1,4 @@
+interface:
+  display_name: "AIOps 故障诊断"
+  short_description: "分析日志、告警和运维文档，生成可追溯的根因诊断报告"
+  default_prompt: "使用 $aiops-diagnosis 分析这份运维资料，构建证据链并输出根因、排查步骤和修复建议。"
