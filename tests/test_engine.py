@@ -6,7 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from diagnosis_engine import RULES, diagnose, parse_events, redact, to_markdown
+from diagnosis_engine import RULES, UNKNOWN_SEVERE, diagnose, normalize_template, parse_events, redact, to_markdown
 
 
 class DiagnosisEngineTests(unittest.TestCase):
@@ -89,10 +89,38 @@ class DiagnosisEngineTests(unittest.TestCase):
         self.assertEqual(report["summary"]["risk"], "未知")
         self.assertEqual(report["hypotheses"][0]["type"], "未知故障")
 
+    def test_unknown_severe_event_enters_review_queue(self):
+        report = diagnose("FATAL service=worker heap allocation failure host=node-1")
+        event = report["events"][0]
+        self.assertEqual(event["anomaly_status"], "anomalous")
+        self.assertEqual(event["classification_status"], "unknown")
+        self.assertIn(UNKNOWN_SEVERE, event["categories"])
+        self.assertEqual(report["review_summary"]["queue_items"], 1)
+
+    def test_negative_severe_event_is_filtered(self):
+        report = diagnose("ERROR service=api no error detected; health check passed")
+        self.assertEqual(report["summary"]["active_events"], 0)
+        self.assertEqual(report["review_summary"]["queue_items"], 0)
+
+    def test_template_id_is_stable_across_dynamic_values(self):
+        first = parse_events("ERROR service=api connection refused host=node-1 request 123")[0]
+        second = parse_events("ERROR service=api connection refused host=node-1 request 456")[0]
+        self.assertEqual(first.template_id, second.template_id)
+        self.assertEqual(normalize_template("request 123"), normalize_template("request 456"))
+
+    def test_review_queue_aggregates_and_scores_templates(self):
+        text = "\n".join(f"FATAL service=worker heap allocation failure host=node-{index}" for index in range(1, 5))
+        report = diagnose(text)
+        item = report["review_queue"][0]
+        self.assertEqual(item["occurrences"], 4)
+        self.assertEqual(len(item["objects"]), 4)
+        self.assertGreaterEqual(item["anomaly_score"], 7)
+
     def test_markdown_contains_safety_boundary(self):
         markdown = to_markdown(diagnose("ERROR connection refused host=api-01"))
         self.assertIn("安全边界", markdown)
         self.assertIn("不代表满足合规要求", markdown)
+        self.assertIn("人工复核队列", markdown)
 
 
 if __name__ == "__main__":
