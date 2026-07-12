@@ -1,11 +1,68 @@
 {
-  "task": "BGL 2k labeled alert detection and evidence diagnosis",
+  "task": "BGL 2k open-set alert triage and evidence review queue",
   "source_url": "https://github.com/logpai/loghub/blob/master/BGL/BGL_2k.log_structured.csv",
   "source_repository": "https://github.com/logpai/loghub",
   "dataset_sha256": "3fe74103c0b02a28514534e2a47257a3f770135ca61afd425bbd3b9d6a31fe26",
   "rows": 2000,
   "alerts": 143,
   "normal": 1857,
+  "ablation": {
+    "v1_rule_only": {
+      "tp": 6,
+      "fp": 27,
+      "fn": 137,
+      "tn": 1830,
+      "precision": 0.18181818181818182,
+      "recall": 0.04195804195804196,
+      "f1": 0.06818181818181819,
+      "false_positive_rate": 0.014539579967689823,
+      "mcc": 0.05545719642672654
+    },
+    "v2_open_set": {
+      "tp": 143,
+      "fp": 247,
+      "fn": 0,
+      "tn": 1610,
+      "precision": 0.36666666666666664,
+      "recall": 1.0,
+      "f1": 0.5365853658536585,
+      "false_positive_rate": 0.13301023155627356,
+      "mcc": 0.5638228874649966
+    },
+    "v3_priority_medium": {
+      "tp": 125,
+      "fp": 176,
+      "fn": 18,
+      "tn": 1681,
+      "precision": 0.4152823920265781,
+      "recall": 0.8741258741258742,
+      "f1": 0.5630630630630631,
+      "false_positive_rate": 0.09477652127086698,
+      "mcc": 0.5615988534689244
+    },
+    "v4_priority_high": {
+      "tp": 36,
+      "fp": 56,
+      "fn": 107,
+      "tn": 1801,
+      "precision": 0.391304347826087,
+      "recall": 0.2517482517482518,
+      "f1": 0.30638297872340425,
+      "false_positive_rate": 0.030156165858912225,
+      "mcc": 0.27254932912091046
+    },
+    "severity_reference": {
+      "tp": 143,
+      "fp": 252,
+      "fn": 0,
+      "tn": 1605,
+      "precision": 0.3620253164556962,
+      "recall": 1.0,
+      "f1": 0.5315985130111525,
+      "false_positive_rate": 0.13570274636510501,
+      "mcc": 0.5593724043595304
+    }
+  },
   "project_active_category_detection": {
     "tp": 6,
     "fp": 27,
@@ -14,7 +71,19 @@
     "precision": 0.18181818181818182,
     "recall": 0.04195804195804196,
     "f1": 0.06818181818181819,
-    "false_positive_rate": 0.014539579967689823
+    "false_positive_rate": 0.014539579967689823,
+    "mcc": 0.05545719642672654
+  },
+  "open_set_detection": {
+    "tp": 143,
+    "fp": 247,
+    "fn": 0,
+    "tn": 1610,
+    "precision": 0.36666666666666664,
+    "recall": 1.0,
+    "f1": 0.5365853658536585,
+    "false_positive_rate": 0.13301023155627356,
+    "mcc": 0.5638228874649966
   },
   "severity_only_reference": {
     "tp": 143,
@@ -24,117 +93,77 @@
     "precision": 0.3620253164556962,
     "recall": 1.0,
     "f1": 0.5315985130111525,
-    "false_positive_rate": 0.13570274636510501
+    "false_positive_rate": 0.13570274636510501,
+    "mcc": 0.5593724043595304
+  },
+  "review_queue": {
+    "queue_items": 120,
+    "high_priority": 19,
+    "medium_priority": 24,
+    "low_priority": 77,
+    "represented_events": 390,
+    "total_input_rows": 2000,
+    "total_templates": 120,
+    "row_to_queue_reduction": 0.94,
+    "top10_alert_coverage": 0.2517482517482518
   },
   "predicted_categories": {
+    "未知严重事件": 357,
     "权限异常": 20,
     "连接超时": 9,
     "服务不可用": 4
   },
-  "top_missed_labels": [
-    [
-      "KERNDTLB",
-      60
-    ],
-    [
-      "KERNSTOR",
-      30
-    ],
-    [
-      "APPSEV",
-      17
-    ],
-    [
-      "KERNMNTF",
-      11
-    ],
-    [
-      "KERNTERM",
-      7
-    ],
-    [
-      "KERNREC",
-      5
-    ],
-    [
-      "APPREAD",
-      3
-    ],
-    [
-      "KERNRTSP",
-      2
-    ],
-    [
-      "APPCHILD",
-      1
-    ],
-    [
-      "APPOUT",
-      1
-    ]
-  ],
-  "top_missed_templates": [
-    [
-      "data TLB error interrupt",
-      60
-    ],
-    [
-      "data storage interrupt",
-      30
-    ],
-    [
-      "ciod: Error reading message prefix after LOAD_MESSAGE on CioStream socket to <*>:<*>: Link has been severed",
-      9
-    ],
-    [
-      "Lustre mount FAILED : bglio<*> : point <*>",
-      9
-    ],
-    [
-      "ciod: Error reading message prefix on CioStream socket to <*>:<*>, Link has been severed",
-      8
-    ],
-    [
-      "rts: kernel terminated for reason <*>",
-      6
-    ],
-    [
-      "Error receiving packet on tree network, expecting type <*> instead of type <*> (softheader=<*> <*> <*> <*>) PSR0=<*> PSR1=<*> PRXF=<*> PIXF=<*>",
-      5
-    ],
-    [
-      "ciod: failed to read message prefix on control stream (CioStream socket to <*>:<*>",
-      3
-    ],
-    [
-      "rts panic! - stopping execution",
-      2
-    ],
-    [
-      "Lustre mount FAILED : bglio<*> : block_id : location",
-      2
-    ]
-  ],
+  "top_missed_labels": [],
+  "top_missed_templates": [],
   "top_false_positive_templates": [
+    [
+      "idoproxydb hit ASSERT condition: ASSERT expression=0 Source file=idotransportmgr.cpp Source line=<*> Function=int IdoTransportMgr::SendPacket(IdoUdpMgr*, BglCtlPavTrace*)",
+      35
+    ],
+    [
+      "ciod: Error loading <*>: invalid or missing program image, No such file or directory",
+      21
+    ],
+    [
+      "instruction address: <*>",
+      20
+    ],
     [
       "ciod: Error loading /<*>: invalid or missing program image, Permission denied",
       19
+    ],
+    [
+      "ciod: LOGIN chdir(<*>) failed: No such file or directory",
+      18
+    ],
+    [
+      "ciod: Error loading /<*>: invalid or missing program image, Exec format error",
+      17
+    ],
+    [
+      "data address: <*>",
+      8
+    ],
+    [
+      "core configuration register: <*>",
+      7
     ],
     [
       "MACHINE CHECK DCR read timeout (mc=<*> iar <*> lr <*>)",
       7
     ],
     [
-      "ciod: Error creating node map from file <*>: Permission denied",
-      1
+      "machine check: i-fetch......................<*>",
+      5
     ]
   ],
-  "per_row_mean_latency_ms": 0.29720605062902905,
-  "per_row_p95_latency_ms": 0.5368999554775655,
-  "full_file_latency_ms": 415.35900003509596,
+  "per_row_mean_latency_ms": 0.3800069995049853,
+  "per_row_p95_latency_ms": 0.750600011087954,
+  "full_file_latency_ms": 460.46689996728674,
   "limitations": [
-    "BGL是超算领域日志，当前规则面向通用服务器、网络、数据库和应用故障，属于明显的领域外评测。",
+    "BGL是超算领域日志，当前规则面向通用服务器、网络、数据库和应用故障，属于领域外评测。",
     "BGL标签表示alert/non-alert，不等同于本项目的根因类别标签。",
-    "severity-only仅作为参考基线，不是项目新增算法。"
+    "模板评分阈值为工程初始值，尚未在企业历史数据上校准。",
+    "复核队列只做只读分流，不自动执行修复。"
   ]
 }
