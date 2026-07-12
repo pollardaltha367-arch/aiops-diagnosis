@@ -1,0 +1,68 @@
+{
+  "dataset": "benchmark.jsonl",
+  "dataset_source": "synthetic + synthetic-holdout",
+  "cases": 31,
+  "fault_cases": 26,
+  "precision": 1.0,
+  "recall": 0.8214285714285714,
+  "f1": 0.9019607843137255,
+  "normal_false_positive_rate": 0.0,
+  "top1_category_hit_rate": 0.8076923076923077,
+  "top3_category_hit_rate": 0.8076923076923077,
+  "risk_accuracy": 0.8387096774193549,
+  "redaction_recall": 1.0,
+  "mean_latency_ms": 0.44704193339472814,
+  "p95_latency_ms": 1.0479000047780573,
+  "failures": [
+    {
+      "case_id": "challenge-db-001",
+      "expected_categories": [
+        "数据库异常"
+      ],
+      "predicted_categories": [],
+      "expected_risk": "中",
+      "predicted_risk": "未知"
+    },
+    {
+      "case_id": "challenge-timeout-001",
+      "expected_categories": [
+        "连接超时"
+      ],
+      "predicted_categories": [],
+      "expected_risk": "低",
+      "predicted_risk": "未知"
+    },
+    {
+      "case_id": "challenge-memory-001",
+      "expected_categories": [
+        "内存资源异常"
+      ],
+      "predicted_categories": [],
+      "expected_risk": "高",
+      "predicted_risk": "未知"
+    },
+    {
+      "case_id": "challenge-access-001",
+      "expected_categories": [
+        "权限异常"
+      ],
+      "predicted_categories": [],
+      "expected_risk": "中",
+      "predicted_risk": "未知"
+    },
+    {
+      "case_id": "challenge-service-001",
+      "expected_categories": [
+        "服务不可用"
+      ],
+      "predicted_categories": [],
+      "expected_risk": "中",
+      "predicted_risk": "未知"
+    }
+  ],
+  "limitations": [
+    "当前评测集为人工构造样例与未参与规则设计的同义表达挑战样例，不能代表企业生产分布。",
+    "根因命中率目前以故障类别为代理指标，不等同于真实根因定位准确率。",
+    "公开数据集与真实故障注入评测尚未完成。"
+  ]
+}
