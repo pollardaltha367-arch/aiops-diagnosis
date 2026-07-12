@@ -1,0 +1,29 @@
+[
+  {
+    "id": "CPU_HIGH",
+    "category": "CPU 资源异常",
+    "patterns": ["cpu high", "high cpu", "cpu usage", "cpu过高", "load average"],
+    "negative_patterns": ["cpu back to normal", "cpu usage normal", "no high cpu"],
+    "severity_weight": 3,
+    "verification": ["检查 CPU 趋势、负载、steal 和上下文切换", "定位高占用进程并对照流量与发布记录"],
+    "repair": "如果确认异常进程或版本回归，则保留现场后限流、回滚或优化；容量不足时再扩容。"
+  },
+  {
+    "id": "MEMORY_HIGH",
+    "category": "内存资源异常",
+    "patterns": ["out of memory", "oom", "memory high", "内存过高", "memory leak"],
+    "negative_patterns": ["memory back to normal", "no oom", "memory usage normal"],
+    "severity_weight": 4,
+    "verification": ["检查内存趋势、swap 和 OOM 记录", "检查进程占用、堆和 GC 指标"],
+    "repair": "如果确认内存泄漏，则修复或回滚对应版本；如果是容量不足，则在验证后扩容。"
+  },
+  {
+    "id": "DISK_FAILURE",
+    "category": "磁盘异常",
+    "patterns": ["disk full", "no space left", "i/o error", "inode", "磁盘异常", "只读文件系统"],
+    "negative_patterns": ["disk space recovered", "no disk error", "filesystem recovered"],
+    "severity_weight": 4,
+    "verification": ["检查磁盘容量、inode 和 IO 延迟", "检查 SMART、挂载状态和异常增长目录"],
+    "repair": "如果确认容量耗尽，则按保留策略归档或扩容；如果确认硬件故障，则进入数据恢复和换盘流程。"
+  }
+]
