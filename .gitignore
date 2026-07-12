@@ -6,6 +6,7 @@ venv/
 .env.*
 data/*.jsonl
 !data/.gitkeep
+datasets/external/*
+!datasets/external/.gitkeep
 .DS_Store
 Thumbs.db
-
