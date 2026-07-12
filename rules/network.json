@@ -1,0 +1,20 @@
+[
+  {
+    "id": "NETWORK_PACKET_LOSS",
+    "category": "网络丢包",
+    "patterns": ["packet loss", "丢包", "crc error", "link down", "network unreachable"],
+    "negative_patterns": ["no packet loss", "packet loss recovered", "link restored"],
+    "severity_weight": 4,
+    "verification": ["持续采样丢包率和延迟", "检查端口 CRC、drop、error 与 up/down 计数"],
+    "repair": "如果确认链路或端口异常，则隔离故障链路并切换到已验证的健康链路。"
+  },
+  {
+    "id": "CONNECTION_TIMEOUT",
+    "category": "连接超时",
+    "patterns": ["timeout", "timed out", "connection refused", "unreachable", "超时", "不可达"],
+    "negative_patterns": ["no timeout", "not timed out", "timeout resolved", "connection recovered"],
+    "severity_weight": 3,
+    "verification": ["检查目标主机和端口连通性", "核对服务监听、防火墙、DNS 与最近网络变更"],
+    "repair": "如果确认端口未监听，则恢复目标服务；如果确认访问控制阻断，则按变更流程修正规则。"
+  }
+]
