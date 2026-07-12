@@ -1,0 +1,20 @@
+[
+  {
+    "id": "DB_CONNECTION_FAILURE",
+    "category": "数据库异常",
+    "patterns": ["database connection", "connection pool", "too many connections", "数据库连接失败", "db unavailable"],
+    "negative_patterns": ["no database connection error", "database connection healthy"],
+    "severity_weight": 4,
+    "verification": ["检查数据库服务状态", "检查连接池使用率", "检查认证失败记录和数据库错误日志"],
+    "repair": "如果确认数据库服务或认证异常，则恢复服务或凭据；如果连接池耗尽，则先定位泄漏再调整容量。"
+  },
+  {
+    "id": "DB_SLOW_QUERY",
+    "category": "数据库慢查询",
+    "patterns": ["slow query", "lock wait", "deadlock", "慢查询", "执行计划"],
+    "negative_patterns": ["no slow query", "deadlock resolved"],
+    "severity_weight": 3,
+    "verification": ["检查慢查询日志和执行计划", "检查索引、锁等待和数据库 IOPS"],
+    "repair": "如果确认 SQL 或索引导致瓶颈，则优化查询和索引；如果资源饱和，则评估限流或扩容。"
+  }
+]
