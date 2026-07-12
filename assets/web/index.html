@@ -25,11 +25,12 @@
         <p id="error" class="error"></p>
       </div>
       <div class="panel output-panel">
-        <div class="panel-title"><h3>02 诊断结果</h3><button id="download" class="ghost" disabled>导出 Markdown</button></div>
+        <div class="panel-title"><h3>02 诊断结果</h3><div><button id="queue-download" class="ghost" disabled>导出复核队列</button> <button id="download" class="ghost" disabled>导出报告</button></div></div>
         <div id="empty" class="empty">等待输入<br><small>结果会在这里形成可追溯证据链</small></div>
         <div id="result" hidden>
           <div class="metrics"><div><span>风险</span><b id="risk">—</b></div><div><span>异常事件</span><b id="events">0</b></div><div><span>脱敏项</span><b id="redactions">0</b></div></div>
           <h4>根因假设</h4><div id="hypotheses"></div>
+          <h4>人工复核队列</h4><div id="review-queue"></div>
           <h4>关键证据</h4><div id="evidence" class="evidence"></div>
         </div>
       </div>
